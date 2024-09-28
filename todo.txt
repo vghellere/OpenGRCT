@@ -1,0 +1,7 @@
+- invisible terrain
+	- fix bug sometimes opaque sometimes transparent. This happens when all tops are flat vs higher top not flat
+- create coaster proof of concept
+- create path
+- create peeps
+- Create chunks
+- terrain: multi-tile terraform
