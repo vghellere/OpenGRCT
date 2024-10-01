@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://d2lvu1kxc487n"]
+[gd_scene load_steps=51 format=4 uid="uid://d2lvu1kxc487n"]
 
 [ext_resource type="Script" path="res://game_manager.gd" id="1_8mwew"]
 [ext_resource type="Script" path="res://game_saver_loader.gd" id="2_l73l2"]
@@ -20,6 +20,14 @@
 [ext_resource type="Script" path="res://terrain/wall/scripts/wall_rectangle.gd" id="18_alt18"]
 [ext_resource type="Script" path="res://terrain/wall/scripts/wall_triangle_up.gd" id="19_e60gb"]
 [ext_resource type="Script" path="res://terrain/wall/scripts/wall_triangle_down.gd" id="20_4nw08"]
+[ext_resource type="Texture2D" uid="uid://d1ujhw8cvbuyi" path="res://art/shovel.png" id="21_if6vs"]
+[ext_resource type="Script" path="res://GUI/scripts/top_bar.gd" id="21_so11o"]
+[ext_resource type="Script" path="res://GUI/windows/land_editor/scripts/land_window.gd" id="22_5nrci"]
+[ext_resource type="Texture2D" uid="uid://cnsbnhhyg1xei" path="res://art/grid.png" id="22_d4skh"]
+[ext_resource type="Texture2D" uid="uid://b56fjbnmfsrqn" path="res://GUI/windows/land_editor/art/top/grass1.jpg" id="25_syfki"]
+[ext_resource type="Texture2D" uid="uid://di6pkf5yr7ysy" path="res://GUI/windows/land_editor/art/top/sand.jpg" id="26_67ld2"]
+[ext_resource type="Texture2D" uid="uid://7lcq56ewkedf" path="res://GUI/windows/land_editor/art/edge/burnt_sand_brown.png" id="27_ue0vy"]
+[ext_resource type="Texture2D" uid="uid://ddp36p6mt6bd8" path="res://GUI/windows/land_editor/art/edge/sand_grey.png" id="28_xi67s"]
 
 [sub_resource type="Environment" id="Environment_e81et"]
 background_mode = 1
@@ -272,108 +280,129 @@ mesh_material = ExtResource("9_r0r05")
 
 [node name="GUI" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 284.0
-offset_bottom = 153.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = SubResource("Theme_ncfih")
 
-[node name="TerraformEnabled" type="CheckButton" parent="GUI"]
-layout_mode = 2
-offset_left = 27.0
-offset_top = 56.0
-offset_right = 232.0
-offset_bottom = 87.0
-focus_mode = 0
-text = "Terraform Enabled"
+[node name="TopBar" type="ColorRect" parent="GUI"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+color = Color(0.536488, 0.6702, 0.507356, 1)
+script = ExtResource("21_so11o")
 
-[node name="ShowHideGridLines" type="CheckButton" parent="GUI"]
-layout_mode = 2
-offset_left = 27.0
-offset_top = 28.0
-offset_right = 232.0
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/TopBar"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -111.0
+offset_top = 5.0
+offset_right = 112.0
 offset_bottom = 59.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="ShowHideGridLines" type="Button" parent="GUI/TopBar/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Show/hide grid lines"
 focus_mode = 0
-text = "Show/hide grid lines"
+text = "           "
+icon = ExtResource("22_d4skh")
+icon_alignment = 1
 
-[node name="ChangeTileWallEnabled" type="CheckButton" parent="GUI"]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 110.0
-offset_right = 193.0
-offset_bottom = 141.0
+[node name="LandButton" type="Button" parent="GUI/TopBar/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Adjust land height and slope"
 focus_mode = 0
-text = "Change tile wall"
+text = "           "
+icon = ExtResource("21_if6vs")
+icon_alignment = 1
 
-[node name="ChangeTileTopEnabled" type="CheckButton" parent="GUI"]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 83.0
-offset_right = 193.0
-offset_bottom = 114.0
+[node name="HBoxContainer2" type="HBoxContainer" parent="GUI/TopBar"]
+layout_mode = 1
+offset_left = 7.0
+offset_top = 5.0
+offset_right = 230.0
+offset_bottom = 59.0
+
+[node name="SaveGame" type="Button" parent="GUI/TopBar/HBoxContainer2"]
+layout_mode = 2
 focus_mode = 0
-text = "Change tile top"
+text = "  Save Game  "
 
-[node name="LoadGame" type="Button" parent="GUI"]
-layout_mode = 0
-offset_left = 31.0
-offset_top = 301.0
-offset_right = 137.0
-offset_bottom = 338.0
+[node name="LoadGame" type="Button" parent="GUI/TopBar/HBoxContainer2"]
+layout_mode = 2
 focus_mode = 0
-text = "Load Game"
+text = "  Load Game  "
 
-[node name="SaveGame" type="Button" parent="GUI"]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 251.0
-offset_right = 137.0
-offset_bottom = 288.0
+[node name="LandWindow" type="Window" parent="GUI"]
+unique_name_in_owner = true
+title = "Land"
+position = Vector2i(35, 115)
+size = Vector2i(226, 115)
+visible = false
+unresizable = true
+script = ExtResource("22_5nrci")
+
+[node name="LandStyleOptions" type="OptionButton" parent="GUI/LandWindow"]
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 104.0
+offset_bottom = 104.0
 focus_mode = 0
-text = "Save Game"
+alignment = 1
+icon_alignment = 1
+selected = 0
+item_count = 3
+popup/item_0/text = "None"
+popup/item_1/icon = ExtResource("25_syfki")
+popup/item_1/id = 1
+popup/item_2/icon = ExtResource("26_67ld2")
+popup/item_2/id = 1
 
-[node name="TerrainAlphaSlider" type="HSlider" parent="GUI"]
-layout_mode = 0
-offset_left = 34.0
-offset_top = 175.0
-offset_right = 344.0
-offset_bottom = 191.0
-max_value = 1.0
-step = 0.05
+[node name="LandEdgeOptions" type="OptionButton" parent="GUI/LandWindow"]
+offset_left = 120.0
+offset_top = 32.0
+offset_right = 216.0
+offset_bottom = 104.0
+focus_mode = 0
+alignment = 1
+icon_alignment = 1
+selected = 0
+item_count = 3
+popup/item_0/text = "None"
+popup/item_1/icon = ExtResource("27_ue0vy")
+popup/item_1/id = 1
+popup/item_2/icon = ExtResource("28_xi67s")
+popup/item_2/id = 1
 
-[node name="Label" type="Label" parent="GUI"]
-layout_mode = 0
-offset_left = 35.0
-offset_top = 148.0
-offset_right = 75.0
-offset_bottom = 171.0
-text = "Terrain Alpha
-"
+[node name="Label" type="Label" parent="GUI/LandWindow"]
+offset_left = 11.12
+offset_top = 6.0
+offset_right = 84.12
+offset_bottom = 29.0
+text = "Land top"
 
-[node name="WallAlphaSlider" type="HSlider" parent="GUI"]
-layout_mode = 0
-offset_left = 33.0
-offset_top = 227.0
-offset_right = 343.0
-offset_bottom = 243.0
-max_value = 1.0
-step = 0.05
-
-[node name="Label2" type="Label" parent="GUI"]
-layout_mode = 0
-offset_left = 34.0
-offset_top = 200.0
-offset_right = 139.0
-offset_bottom = 223.0
-text = "Wall Alpha
-"
+[node name="Label2" type="Label" parent="GUI/LandWindow"]
+offset_left = 122.0
+offset_top = 6.0
+offset_right = 206.0
+offset_bottom = 29.0
+text = "Land edge"
 
 [connection signal="input_event" from="GridMap/CollisionArea3D" to="GridMap/CollisionArea3D" method="_on_input_event"]
 [connection signal="mouse_exited" from="GridMap/CollisionArea3D" to="GridMap/CollisionArea3D" method="_on_mouse_exited"]
-[connection signal="pressed" from="GUI/TerraformEnabled" to="GameManager" method="_on_terraform_enabled_pressed"]
-[connection signal="pressed" from="GUI/ShowHideGridLines" to="GameManager" method="_on_show_hide_grid_lines"]
-[connection signal="pressed" from="GUI/ChangeTileWallEnabled" to="GameManager" method="_on_change_tile_wall_enabled_pressed"]
-[connection signal="pressed" from="GUI/ChangeTileTopEnabled" to="GameManager" method="_on_change_tile_top_enabled_pressed"]
-[connection signal="pressed" from="GUI/LoadGame" to="GameManager" method="_on_load_game_pressed"]
-[connection signal="pressed" from="GUI/SaveGame" to="GameManager" method="_on_save_game_pressed"]
-[connection signal="value_changed" from="GUI/TerrainAlphaSlider" to="GameManager" method="_on_terrain_alpha_slider_value_changed"]
-[connection signal="value_changed" from="GUI/WallAlphaSlider" to="GameManager" method="_on_wall_alpha_slider_value_changed"]
+[connection signal="pressed" from="GUI/TopBar/HBoxContainer/ShowHideGridLines" to="GUI/TopBar" method="_on_show_hide_grid_lines_pressed"]
+[connection signal="pressed" from="GUI/TopBar/HBoxContainer/LandButton" to="GUI/TopBar" method="_on_land_button_pressed"]
+[connection signal="pressed" from="GUI/TopBar/HBoxContainer2/SaveGame" to="GameManager" method="_on_save_game_pressed"]
+[connection signal="pressed" from="GUI/TopBar/HBoxContainer2/LoadGame" to="GameManager" method="_on_load_game_pressed"]
+[connection signal="close_requested" from="GUI/LandWindow" to="GUI/LandWindow" method="_on_close_requested"]
+[connection signal="visibility_changed" from="GUI/LandWindow" to="GUI/LandWindow" method="_on_visibility_changed"]
+[connection signal="item_selected" from="GUI/LandWindow/LandStyleOptions" to="GUI/LandWindow" method="_on_land_style_options_item_selected"]
+[connection signal="item_selected" from="GUI/LandWindow/LandEdgeOptions" to="GUI/LandWindow" method="_on_land_edge_options_item_selected"]

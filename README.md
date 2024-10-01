@@ -15,3 +15,7 @@ https://opengameart.org/node/7526
 https://opengameart.org/node/11958
 
 https://opengameart.org/node/7998
+
+https://opengameart.org/content/shovel-1
+
+https://opengameart.org/content/vaporwave-grid

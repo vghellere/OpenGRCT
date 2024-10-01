@@ -6,6 +6,7 @@ const CORNER_THRESHOLD = 0.35
 @export var grid_map: CustomGridMap;
 @onready var viewport: Viewport = get_viewport()
 @onready var world_3d: World3D = get_world_3d()
+@onready var land_window: Window = %LandWindow
 
 var _previous_tile: GridTileData
 var _mouse_pressed: bool = false
@@ -18,17 +19,17 @@ func _input(event):
 			_mouse_pressed = true
 			_mouse_pressed_start_pos = event.position
 
-			if(_previous_tile):
-				if Global.change_tile_top_enabled:
-					_previous_tile.ground_texture_idx = 1
-				if Global.change_tile_wall_enabled:
-					_previous_tile.wall_texture_idx = 1
+			if _previous_tile and land_window.visible:
+				if land_window.change_tile_top_enabled:
+					_previous_tile.ground_texture_idx = land_window.selected_tile_top_idx
+				if land_window.change_tile_edge_enabled:
+					_previous_tile.wall_texture_idx = land_window.selected_tile_edge_idx
 		
 		else:
 			_mouse_pressed = false
 			
 	if event is InputEventMouseMotion and _mouse_pressed:
-		if Global.terraform_enabled and _previous_tile:
+		if land_window.visible and _previous_tile:
 			var y_diff = _mouse_pressed_start_pos.y - event.position.y
 			if y_diff > 28:
 				_mouse_pressed_start_pos = event.position
@@ -79,7 +80,7 @@ func cast_ray_to_ground():
 		_previous_tile.highlighted = GridTileData.TileHighlight.DISABLED
 		
 		_previous_tile = grid_map.get_tile_from_xz(x, z)
-	if Global.terraform_enabled:
+	if land_window.visible:
 		_highlight_tile(_previous_tile, result.position)
 
 

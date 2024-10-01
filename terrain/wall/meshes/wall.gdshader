@@ -84,7 +84,7 @@ vec2 rotateUV(vec2 uv, float rotation)
 			rotation_rad = radians(270);
 			break;
 	}
-	
+
     float mid = 0.5;
     float cosAngle = cos(rotation_rad);
     float sinAngle = sin(rotation_rad);
