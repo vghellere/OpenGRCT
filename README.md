@@ -6,6 +6,10 @@ OpenGRCT (Open Godot RollerCoaster Tycoon) is an open-source implementation of R
 
 Note 2: if you are looking for a fully working open source re-implementation of RollerCoaster Tycoon 2 check out [OpenRCT2](https://github.com/OpenRCT2/OpenRCT2/)
 
+# Play the game
+
+The game can be played in the browser. Releases can be found [here](https://vghellere.github.io/opengrct/)
+
 # References
 
 https://opengameart.org/node/8000
