@@ -396,6 +396,19 @@ offset_right = 206.0
 offset_bottom = 29.0
 text = "Land edge"
 
+[node name="VersionLabel" type="Label" parent="GUI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -26.0
+offset_right = 80.0
+offset_bottom = -3.0
+grow_vertical = 0
+text = "Version: x"
+
 [connection signal="input_event" from="GridMap/CollisionArea3D" to="GridMap/CollisionArea3D" method="_on_input_event"]
 [connection signal="mouse_exited" from="GridMap/CollisionArea3D" to="GridMap/CollisionArea3D" method="_on_mouse_exited"]
 [connection signal="pressed" from="GUI/TopBar/HBoxContainer/ShowHideGridLines" to="GUI/TopBar" method="_on_show_hide_grid_lines_pressed"]

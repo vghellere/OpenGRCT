@@ -4,7 +4,7 @@ extends Node
 @onready var game_saver_loader = $"../GameSaverLoader"
 
 func _ready():
-	pass
+	%VersionLabel.text = "Version: " + ProjectSettings.get_setting("application/config/version")
 	
 
 func _on_save_game_pressed():
